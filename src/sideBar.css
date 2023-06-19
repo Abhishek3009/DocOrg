@@ -1,0 +1,36 @@
+.new-btn {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
+    border: none;
+    background: white;
+    padding: 5px 16px;
+    border-radius: 100px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .new-btn * {
+    pointer-events: none;
+  }
+  .new-btn:hover {
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302), 0 4px 8px 3px rgba(60, 64, 67, 0.149);
+    background: #f8f9fa;
+  }
+  .new-btn:focus {
+    background-color: #f8f9fa;
+  }
+  .new-btn:active {
+    background-color: #e8f0fe;
+  }
+  .new-btn .icon {
+    margin-right: 10px;
+  }
+  .new-btn .name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 9px;
+    color: #3c4043;
+  }
