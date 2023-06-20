@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Electron App</title>
   <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="sideBar.css">
+  <link rel="stylesheet" href="foldersView.css">
   <script>
     window.onload = () => {
       const openButton = document.getElementById('openButton');
@@ -19,13 +19,17 @@
 </head>
 <body>
   <div id="container">
-    <div id="docFolders">
+    <div id="foldersView">
       <button class="new-btn">
         <span class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+            <path class="extrpath" fill="#EA4335" d="M16 16v14h4V20z"/>
             <path fill="#34A853" d="M16 16v14h4V20z"/>
+            <path class="extrpath" fill="#EA4335" d="M30 16H20l-4 4h14z"/>
             <path fill="#4285F4" d="M30 16H20l-4 4h14z"/>
-            <path fill="#FBBC05" d="M6 16v4h10l4-4z"/>
+            <path class="extrpath" fill="#4285F4" d="M6 16v4h10l4-4z"/>           
+            <path fill="#f7ff15" d="M6 16v4h10l4-4z"/>
+            <path class="extrpath" fill="#f7ff15" d="M20 16V6h-4v14z"/>           
             <path fill="#EA4335" d="M20 16V6h-4v14z"/>
             <path fill="none" d="M0 0h36v36H0z"/>
           </svg>
@@ -33,7 +37,7 @@
         <span class="name">New</span>
       </button>
     </div>
-    <div id="filesView">Files</div>
+    <div id="filesView"></div>
   </div>
   <!-- <input type="file" id="fileInput">
   <button id="openButton">Open</button> -->

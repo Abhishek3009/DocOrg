@@ -8,6 +8,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    maximizable: false,
+    resizable: false,
     webPreferences: {
       nodeIntegration: false, // Make sure to set this to false
       contextIsolation: true, // Enable context isolation

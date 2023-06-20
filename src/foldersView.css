@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     margin-left: 8px;
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 10px;
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
     border: none;
@@ -28,6 +28,12 @@
   .new-btn .icon {
     margin-right: 10px;
   }
+
+  .extrpath{
+    transform: rotate(45deg);
+    transform-origin: 50% 50%;
+  }
+
   .new-btn .name {
     font-size: 14px;
     font-weight: 500;

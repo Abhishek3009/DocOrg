@@ -13,13 +13,24 @@ body {
   align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
+  height: 100%;
 }
 
-#docFolders{
-  width: 1000px;
-  resize: horizontal;
+#foldersView{
+  min-width: 200px;
+  height: 500px;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }
 
 #filesView{
-  width: 3000px;
+  min-width: 500px;
+  height: 100%;
+  min-height: 500px;
+  background-color: white;
+  border-radius: 20px;
 }
