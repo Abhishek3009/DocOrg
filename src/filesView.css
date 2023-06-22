@@ -1,0 +1,40 @@
+#filesView {
+  min-width: 750px;
+  width: 750px;
+  height: 450px;
+  min-height: 450px;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: flex-start;
+}
+
+.folder-block {
+  padding: 0%;
+  margin: 10px;
+  background-color: rgb(230, 230, 230);
+  height: 50px;
+  width: 210px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  border-radius: 10px;
+}
+
+.folder-icon {
+  width: 30px;
+  margin: 10px;
+}
+
+.folder-content {
+  width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
