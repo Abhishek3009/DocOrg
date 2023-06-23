@@ -58,3 +58,37 @@ ipcMain.handle('openFile', (event, filePath) => {
     newWindow.show();
   });
 });
+
+
+//////////////////////////////////////////////////
+/////////////// New Doc Directory ////////////////
+//////////////////////////////////////////////////
+
+ipcMain.handle('create-new-dir', async (event, dirName) => {
+    try {
+        try {
+            if (!fs.existsSync("doc-dirs")) {
+                fs.mkdirSync("doc-dirs");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    
+    const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+      
+    if (fs.existsSync(filePath)) {
+        dialog.showErrorBox('Error', 'Dir already exists.');
+        return;
+    }
+  
+      fs.writeFile(filePath, '', (err) => {
+        if (err) {
+          console.error(err);
+          dialog.showErrorBox('Error', 'Failed to create dir.');
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      dialog.showErrorBox('Error', 'An error occurred while saving the file.');
+    }
+});

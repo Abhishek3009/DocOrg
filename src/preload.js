@@ -12,5 +12,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   openFile: (filePath) => {
     ipcRenderer.invoke('openFile', filePath);
+  },
+  createDocDir: (docDirName) => {
+    ipcRenderer.invoke('create-new-dir', docDirName);
+  },
+  readFile: () => {
+    ipcRenderer.invoke('read-file');
+  },
+  writeFile: (text) => {
+    ipcRenderer.invoke('write-file', text);
   }
 });
