@@ -178,3 +178,8 @@
   padding-bottom: 4px;
   margin-left: 10px;
 }
+
+.extrpath{
+  transform: rotate(45deg);
+  transform-origin: 50% 50%;
+}
