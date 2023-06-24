@@ -47,27 +47,31 @@ const create_new_dir = document.getElementById('create-new-dir')
 const create_new_dir_btn = document.getElementById('create-new-dir-btn')
 const folders_view = document.getElementById('foldersView')
 
-create_new_dir_btn.addEventListener('click', function () {
+create_new_dir_btn.addEventListener('click', async function () {
   let newDirName = document.getElementById('create-new-dir').value
-  createDocDir(newDirName)
-  let newDirBlock = createDirBtn(newDirName);
-  folders_view.appendChild(newDirBlock)
+  let messsage = await createDocDir(newDirName)
+  if (messsage === 0) {
+    let newDirBlock = createDirBtn(newDirName)
+    folders_view.appendChild(newDirBlock)
+  } else {
+    console.log(messsage)
+  }
 });
 
 function createDirBtn(contentName) {
 
-  const folderBlock = document.createElement('div');
-  folderBlock.className = 'folder-btn';
-
-  const folderIcon = document.createElement('img');
-  folderIcon.className = 'folder-btn-icon'
-  folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
-  folderBlock.appendChild(folderIcon);
-
-  const folderContent = document.createElement('div');
-  folderContent.className = 'folder-btn-content';
-  folderContent.textContent = contentName;
-  folderBlock.appendChild(folderContent);
+	const folderBlock = document.createElement('div');
+	folderBlock.className = 'folder-btn';
   
-return folderBlock;
+	const folderIcon = document.createElement('img');
+	folderIcon.className = 'folder-btn-icon'
+	folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
+	folderBlock.appendChild(folderIcon);
+  
+	const folderContent = document.createElement('div');
+	folderContent.className = 'folder-btn-content';
+	folderContent.textContent = contentName;
+	folderBlock.appendChild(folderContent);
+	
+	return folderBlock;
 }

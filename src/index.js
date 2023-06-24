@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, contextBridge, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
@@ -64,7 +64,9 @@ ipcMain.handle('openFile', (event, filePath) => {
 /////////////// New Doc Directory ////////////////
 //////////////////////////////////////////////////
 
-ipcMain.handle('create-new-dir', async (event, dirName) => {
+ipcMain.handle('create-new-dir', (event, dirName) => {
+
+    var creationStat = 0;
     try {
         try {
             if (!fs.existsSync("doc-dirs")) {
@@ -74,21 +76,26 @@ ipcMain.handle('create-new-dir', async (event, dirName) => {
             console.error(err);
         }
     
-    const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
-      
-    if (fs.existsSync(filePath)) {
-        dialog.showErrorBox('Error', 'Dir already exists.');
-        return;
-    }
-  
-      fs.writeFile(filePath, '', (err) => {
-        if (err) {
-          console.error(err);
-          dialog.showErrorBox('Error', 'Failed to create dir.');
+        const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+        
+        if (fs.existsSync(filePath)) {
+            dialog.showErrorBox('Error', 'Dir already exists.');
+            creationStat = 1;
         }
-      });
-    } catch (err) {
+    
+        fs.writeFile(filePath, '', (err) => {
+            if (err) {
+            console.error(err);
+            dialog.showErrorBox('Error', 'Failed to create dir.');
+            creationStat = 2;
+            }
+        });
+    } 
+    catch (err) {
       console.error(err);
       dialog.showErrorBox('Error', 'An error occurred while saving the file.');
-    }
+      creationStat = 3;
+    }    
+
+    return creationStat
 });
