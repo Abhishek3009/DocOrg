@@ -61,11 +61,10 @@ ipcMain.handle('openFile', (event, filePath) => {
 
 
 //////////////////////////////////////////////////
-/////////////// New Doc Directory ////////////////
+///////////// Doc Directory Handlers /////////////
 //////////////////////////////////////////////////
 
-ipcMain.handle('create-new-dir', (event, dirName) => {
-
+ipcMain.handle('create-doc-dir', (event, dirName) => {
     var creationStat = 0;
     try {
         try {
@@ -75,14 +74,11 @@ ipcMain.handle('create-new-dir', (event, dirName) => {
         } catch (err) {
             console.error(err);
         }
-    
         const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
-        
         if (fs.existsSync(filePath)) {
             dialog.showErrorBox('Error', 'Dir already exists.');
             creationStat = 1;
         }
-    
         fs.writeFile(filePath, '', (err) => {
             if (err) {
             console.error(err);
@@ -95,7 +91,24 @@ ipcMain.handle('create-new-dir', (event, dirName) => {
       console.error(err);
       dialog.showErrorBox('Error', 'An error occurred while saving the file.');
       creationStat = 3;
-    }    
-
+    }
     return creationStat
 });
+
+ipcMain.handle('open-doc-dir', (event, dirName) => {
+    const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+    try {
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+            console.error(err);
+            dialog.showErrorBox('Error', 'Failed to read file.');
+            } else {
+            dialog.showMessageBox(mainWindow, { type: 'info', message: data });
+            }
+        });
+    }
+    catch (err) {
+        console.error(err);
+        dialog.showErrorBox('Error', 'An error occurred while opening the file.');
+    }
+})

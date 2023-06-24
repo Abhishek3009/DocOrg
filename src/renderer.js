@@ -1,5 +1,5 @@
 // Access the Electron API via the exposed object
-const { sendOpenFolder, receiveFolderContents, openFile, createDocDir } = window.electronAPI;
+const { sendOpenFolder, receiveFolderContents, openFile, createDocDir, openDocDir} = window.electronAPI;
 
 // receiveFolderContents((contents) => {
 //   const filesView = document.getElementById('filesView');
@@ -59,23 +59,17 @@ create_new_dir_btn.addEventListener('click', async function () {
 });
 
 function createDirBtn(contentName) {
-
 	const folderBlock = document.createElement('button');
-	folderBlock.className = 'folder-btn';
-	
+	folderBlock.className = 'folder-btn';	
 	folderBlock.setAttribute('onclick', "openFolder('"+contentName+"')");
-	// folderBlock.addEventListener("click", openFolder(contentName));
-  
 	const folderIcon = document.createElement('img');
 	folderIcon.className = 'folder-btn-icon'
 	folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
 	folderBlock.appendChild(folderIcon);
-  
 	const folderContent = document.createElement('div');
 	folderContent.className = 'folder-btn-content';
 	folderContent.textContent = contentName;
 	folderBlock.appendChild(folderContent);
-	
 	return folderBlock;
 }
 
@@ -83,6 +77,6 @@ function createDirBtn(contentName) {
 /////////////// Open Doc Directory ///////////////
 //////////////////////////////////////////////////
 function openFolder(dirName) {
-	console.log(dirName)
+	openDocDir(dirName);
 	return;
 }

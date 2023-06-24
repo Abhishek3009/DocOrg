@@ -18,7 +18,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	},
 	
 	createDocDir: async(docDirName) => {
-    	let response = await ipcRenderer.invoke('create-new-dir', docDirName);
+    	let response = await ipcRenderer.invoke('create-doc-dir', docDirName);
+		console.log(response)
+		return response;
+	},
+
+	openDocDir: async(docDirName) => {
+    	let response = await ipcRenderer.invoke('open-doc-dir', docDirName);
 		console.log(response)
 		return response;
 	},
