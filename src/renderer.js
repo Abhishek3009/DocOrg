@@ -60,8 +60,11 @@ create_new_dir_btn.addEventListener('click', async function () {
 
 function createDirBtn(contentName) {
 
-	const folderBlock = document.createElement('div');
+	const folderBlock = document.createElement('button');
 	folderBlock.className = 'folder-btn';
+	
+	folderBlock.setAttribute('onclick', "openFolder('"+contentName+"')");
+	// folderBlock.addEventListener("click", openFolder(contentName));
   
 	const folderIcon = document.createElement('img');
 	folderIcon.className = 'folder-btn-icon'
@@ -74,4 +77,12 @@ function createDirBtn(contentName) {
 	folderBlock.appendChild(folderContent);
 	
 	return folderBlock;
+}
+
+//////////////////////////////////////////////////
+/////////////// Open Doc Directory ///////////////
+//////////////////////////////////////////////////
+function openFolder(dirName) {
+	console.log(dirName)
+	return;
 }

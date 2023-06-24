@@ -163,6 +163,8 @@
   align-content: space-around;
   border-radius: 20px;
   justify-content: flex-start;
+  border: none;
+  cursor: pointer;
 }
 
 .folder-btn-icon {
