@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, contextBridge, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
@@ -123,3 +123,28 @@ ipcMain.handle('open-doc-dir', (event, dirName) => {
     }
     return "opened"
 })
+
+/////////////////////////////////////////////////////////// Window Menu /////////////////////////////////////////////////////////////////////
+
+const DocOrgMenuOptions = [
+    {
+      label:"About",
+      submenu:[
+        {
+          label:"My Git",
+          click: async () => {
+            let myGitWin = new BrowserWindow({
+              width: 600,
+              height: 600,
+              title: "GitHub",
+              autoHideMenuBar:true,
+            });
+            myGitWin.loadURL('https://github.com/Abhishek3009')
+          },
+        }
+      ]
+    }
+  ]
+  
+  const DocOrgMenu = Menu.buildFromTemplate(DocOrgMenuOptions)
+  Menu.setApplicationMenu(DocOrgMenu)
