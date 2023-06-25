@@ -95,6 +95,16 @@ ipcMain.handle('create-doc-dir', (event, dirName) => {
     return creationStat
 });
 
+ipcMain.handle('load-doc-dir', (event) => {
+    const folderPath = path.join(__dirname, "../doc-dirs");
+    if (!fs.existsSync(folderPath)) {
+        dialog.showErrorBox('Folder Not Found', 'The specified folder does not exist.');
+        return;
+    }
+    const contents = fs.readdirSync(folderPath);
+    return contents
+})
+
 ipcMain.handle('open-doc-dir', (event, dirName) => {
     const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
     try {
@@ -111,4 +121,5 @@ ipcMain.handle('open-doc-dir', (event, dirName) => {
         console.error(err);
         dialog.showErrorBox('Error', 'An error occurred while opening the file.');
     }
+    return "opened"
 })

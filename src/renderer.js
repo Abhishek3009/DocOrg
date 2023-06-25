@@ -1,5 +1,16 @@
 // Access the Electron API via the exposed object
-const { sendOpenFolder, receiveFolderContents, openFile, createDocDir, openDocDir} = window.electronAPI;
+const { sendOpenFolder, receiveFolderContents, openFile, 
+		createDocDir, loadDocDir, openDocDir} = window.electronAPI;
+
+//////////////////////////////////////////////////
+/////////////// Element Variables ////////////////
+//////////////////////////////////////////////////
+
+const body = document.body
+
+const create_new_dir = document.getElementById('create-new-dir')
+const create_new_dir_btn = document.getElementById('create-new-dir-btn')
+const folders_view = document.getElementById('foldersView')
 
 // receiveFolderContents((contents) => {
 //   const filesView = document.getElementById('filesView');
@@ -38,14 +49,32 @@ const { sendOpenFolder, receiveFolderContents, openFile, createDocDir, openDocDi
 // return folderBlock;
 // }
 
-
 //////////////////////////////////////////////////
 /////////////// New Doc Directory ////////////////
 //////////////////////////////////////////////////
 
-const create_new_dir = document.getElementById('create-new-dir')
-const create_new_dir_btn = document.getElementById('create-new-dir-btn')
-const folders_view = document.getElementById('foldersView')
+function removeExtension(filename) {
+	return filename.substring(0, filename.lastIndexOf('.')) || filename;
+}
+
+async function loadSideBar() {
+	const contents = await loadDocDir()
+	console.log(contents)
+	let contentId = 0;
+	while (contentId < contents.length) {
+		dirName = removeExtension(contents[contentId])
+		let currContentBlock = createDirBtn(dirName);
+		folders_view.appendChild(currContentBlock)
+		contentId++;
+	}
+};
+
+body.onload = loadSideBar();
+
+
+//////////////////////////////////////////////////
+/////////////// New Doc Directory ////////////////
+//////////////////////////////////////////////////
 
 create_new_dir_btn.addEventListener('click', async function () {
   let newDirName = document.getElementById('create-new-dir').value
