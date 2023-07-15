@@ -9,41 +9,46 @@
     <link rel="stylesheet" href="filesView.css">
 
 </head>
-<body>
+<body>      
 
     <div id="createBar">
         <input type="text" id="create-new-dir">
         <button id="create-new-dir-btn">Create Document Section</button>
     </div>
-
-    <!-- <div>
-        <input type="text" id="folderPath" placeholder="Enter folder path">
-        <button id="openButton">Open</button>
-    </div> -->
-
     <div id="container">
         <div id="foldersView">
-            <button class="new-btn">
-                <span class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
-                        <path class="extrpath" fill="#EA4335" d="M16 16v14h4V20z"></path>
-                        <path fill="#34A853" d="M16 16v14h4V20z"></path>
-                        <path class="extrpath" fill="#e8d102" d="M30 16H20l-4 4h14z"></path>
-                        <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-                        <path class="extrpath" fill="#4285F4" d="M6 16v4h10l4-4z"></path>           
-                        <path fill="#e8d102" d="M6 16v4h10l4-4z"></path>
-                        <path class="extrpath" fill="#34A853" d="M20 16V6h-4v14z"></path>           
-                        <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-                        <path fill="none" d="M0 0h36v36H0z"></path>
-                    </svg>
-                </span>
-                <span class="name">New</span>
-            </button>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+                            <path class="extrpath" fill="#EA4335" d="M16 16v14h4V20z"></path>
+                            <path fill="#34A853" d="M16 16v14h4V20z"></path>
+                            <path class="extrpath" fill="#e8d102" d="M30 16H20l-4 4h14z"></path>
+                            <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
+                            <path class="extrpath" fill="#4285F4" d="M6 16v4h10l4-4z"></path>           
+                            <path fill="#e8d102" d="M6 16v4h10l4-4z"></path>
+                            <path class="extrpath" fill="#34A853" d="M20 16V6h-4v14z"></path>           
+                            <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
+                            <path fill="none" d="M0 0h36v36H0z"></path>
+                        </svg>
+                    </span>
+                    <span class="name">
+                        New
+                    </span>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="#">Folder</a>
+                    <a href="#">Document</a>
+                    <a href="#">Spreadsheet</a>
+                    <a href="#">Presentation</a>
+                </div>
+            </div>        
         </div>
         <div id="filesView"></div>
-    </div>
+    </div>      
 
     <script src="renderer.js"></script>
+    <script src="newButton.js"></script>
 
 </body>
 </html>

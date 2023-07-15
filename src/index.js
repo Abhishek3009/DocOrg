@@ -22,6 +22,8 @@ function createWindow() {
         slashes: true,
     }));
 
+    mainWindow.webContents.openDevTools()
+
     mainWindow.on('closed', function () {
         mainWindow = null;
     });
@@ -66,33 +68,41 @@ ipcMain.handle('openFile', (event, filePath) => {
 
 ipcMain.handle('create-doc-dir', (event, dirName) => {
     var creationStat = 0;
-    try {
+
+    if (dirName==="") {
+        creationStat = 4;
+        dialog.showErrorBox('Error', 'Enter Directory Name!');
+        return creationStat;
+    } else {
         try {
-            if (!fs.existsSync("doc-dirs")) {
-                fs.mkdirSync("doc-dirs");
+            try {
+                if (!fs.existsSync("doc-dirs")) {
+                    fs.mkdirSync("doc-dirs");
+                }
+            } catch (err) {
+                console.error(err);
             }
-        } catch (err) {
-            console.error(err);
-        }
-        const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
-        if (fs.existsSync(filePath)) {
-            dialog.showErrorBox('Error', 'Dir already exists.');
-            creationStat = 1;
-        }
-        fs.writeFile(filePath, '', (err) => {
-            if (err) {
-            console.error(err);
-            dialog.showErrorBox('Error', 'Failed to create dir.');
-            creationStat = 2;
+            const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+            if (fs.existsSync(filePath)) {
+                dialog.showErrorBox('Error', 'Dir already exists.');
+                creationStat = 1;
             }
-        });
-    } 
-    catch (err) {
-      console.error(err);
-      dialog.showErrorBox('Error', 'An error occurred while saving the file.');
-      creationStat = 3;
+            fs.writeFile(filePath, '', (err) => {
+                if (err) {
+                console.error(err);
+                dialog.showErrorBox('Error', 'Failed to create dir.');
+                creationStat = 2;
+                }
+            });
+        } 
+        catch (err) {
+        console.error(err);
+        dialog.showErrorBox('Error', 'An error occurred while saving the file.');
+        creationStat = 3;
+        }
+        return creationStat
     }
-    return creationStat
+
 });
 
 ipcMain.handle('load-doc-dir', (event) => {
