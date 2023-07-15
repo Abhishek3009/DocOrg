@@ -33,20 +33,20 @@ const folders_view = document.getElementById('foldersView')
 
 // function createContentBlock(contentName) {
 
-//   const folderBlock = document.createElement('div');
-//   folderBlock.className = 'folder-block';
+//   const folderButton = document.createElement('div');
+//   folderButton.className = 'folder-block';
 
 //   const folderIcon = document.createElement('img');
 //   folderIcon.className = 'folder-icon'
 //   folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
-//   folderBlock.appendChild(folderIcon);
+//   folderButton.appendChild(folderIcon);
 
 //   const folderContent = document.createElement('div');
 //   folderContent.className = 'folder-content';
 //   folderContent.textContent = contentName;
-//   folderBlock.appendChild(folderContent);
+//   folderButton.appendChild(folderContent);
   
-// return folderBlock;
+// return folderButton;
 // }
 
 //////////////////////////////////////////////////
@@ -88,18 +88,22 @@ create_new_dir_btn.addEventListener('click', async function () {
 });
 
 function createDirBtn(contentName) {
-	const folderBlock = document.createElement('button');
-	folderBlock.className = 'folder-btn';	
-	folderBlock.setAttribute('onclick', "openFolder('"+contentName+"')");
+	const folderButton = document.createElement('button');
+	folderButton.className = 'doc-org-button';	
+	folderButton.setAttribute('onclick', "openFolder('"+contentName+"')");
+
+	const folderBlock = document.createElement('div');
+
 	const folderIcon = document.createElement('img');
-	folderIcon.className = 'folder-btn-icon'
+	folderIcon.className = 'doc-org-button-icon'
 	folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
 	folderBlock.appendChild(folderIcon);
 	const folderContent = document.createElement('div');
-	folderContent.className = 'folder-btn-content';
+	folderContent.className = 'doc-org-button-content';
 	folderContent.textContent = contentName;
 	folderBlock.appendChild(folderContent);
-	return folderBlock;
+	folderButton.appendChild(folderBlock);
+	return folderButton;
 }
 
 //////////////////////////////////////////////////
