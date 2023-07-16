@@ -1,18 +1,21 @@
 // Access the Electron API via the exposed object
-const { sendOpenFolder, receiveFolderContents, openFile, 
-		createDocDir, loadDocDir, openDocDir} = window.electronAPI;
+const { sendOpendir, receivedirContents, openFile, 
+		createDocDir, loadDocDir, openDocDir,
+		addDoc										} = window.electronAPI;
 
 //////////////////////////////////////////////////
 /////////////// Element Variables ////////////////
 //////////////////////////////////////////////////
 
 const body = document.body
+const dirs_view = document.getElementById('dirsView')
 
 const create_new_dir = document.getElementById('create-new-dir')
 const create_new_dir_btn = document.getElementById('create-new-dir-btn')
-const folders_view = document.getElementById('foldersView')
+const add_doc = document.getElementById('add-doc')
 
-// receiveFolderContents((contents) => {
+
+// receivedirContents((contents) => {
 //   const filesView = document.getElementById('filesView');
 //   filesView.innerText = contents.join('\n');
 //   console.log(contents)
@@ -33,24 +36,24 @@ const folders_view = document.getElementById('foldersView')
 
 // function createContentBlock(contentName) {
 
-//   const folderButton = document.createElement('div');
-//   folderButton.className = 'folder-block';
+//   const dirButton = document.createElement('div');
+//   dirButton.className = 'dir-block';
 
-//   const folderIcon = document.createElement('img');
-//   folderIcon.className = 'folder-icon'
-//   folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
-//   folderButton.appendChild(folderIcon);
+//   const dirIcon = document.createElement('img');
+//   dirIcon.className = 'dir-icon'
+//   dirIcon.src =`D:/My Projects/doc-org/src/icons/dir-icon.png`;
+//   dirButton.appendChild(dirIcon);
 
-//   const folderContent = document.createElement('div');
-//   folderContent.className = 'folder-content';
-//   folderContent.textContent = contentName;
-//   folderButton.appendChild(folderContent);
+//   const dirContent = document.createElement('div');
+//   dirContent.className = 'dir-content';
+//   dirContent.textContent = contentName;
+//   dirButton.appendChild(dirContent);
   
-// return folderButton;
+// return dirButton;
 // }
 
 //////////////////////////////////////////////////
-/////////////// New Doc Directory ////////////////
+//////////////// Initialization //////////////////
 //////////////////////////////////////////////////
 
 function removeExtension(filename) {
@@ -64,7 +67,7 @@ async function loadSideBar() {
 	while (contentId < contents.length) {
 		dirName = removeExtension(contents[contentId])
 		let currContentBlock = createDirBtn(dirName);
-		folders_view.appendChild(currContentBlock)
+		dirs_view.appendChild(currContentBlock)
 		contentId++;
 	}
 };
@@ -73,43 +76,53 @@ body.onload = loadSideBar();
 
 
 //////////////////////////////////////////////////
-/////////////// New Doc Directory ////////////////
+/////////////// Directory Options ////////////////
 //////////////////////////////////////////////////
 
+// Create Directory
 create_new_dir_btn.addEventListener('click', async function () {
   let newDirName = document.getElementById('create-new-dir').value
   let messsage = await createDocDir(newDirName)
   if (messsage === 0) {
     let newDirBlock = createDirBtn(newDirName)
-    folders_view.appendChild(newDirBlock)
+    dirs_view.appendChild(newDirBlock)
   } else {
     console.log(messsage)
   }
 });
-
 function createDirBtn(contentName) {
-	const folderButton = document.createElement('button');
-	folderButton.className = 'doc-org-button';	
-	folderButton.setAttribute('onclick', "openFolder('"+contentName+"')");
+	const dirButton = document.createElement('button');
+	dirButton.className = 'doc-org-button';	
+	dirButton.setAttribute('onclick', "opendir('"+contentName+"')");
 
-	const folderBlock = document.createElement('div');
+	const dirBlock = document.createElement('div');
 
-	const folderIcon = document.createElement('img');
-	folderIcon.className = 'doc-org-button-icon'
-	folderIcon.src =`D:/My Projects/doc-org/src/icons/folder-icon.png`;
-	folderBlock.appendChild(folderIcon);
-	const folderContent = document.createElement('div');
-	folderContent.className = 'doc-org-button-content';
-	folderContent.textContent = contentName;
-	folderBlock.appendChild(folderContent);
-	folderButton.appendChild(folderBlock);
-	return folderButton;
+	const dirIcon = document.createElement('img');
+	dirIcon.className = 'doc-org-button-icon'
+	dirIcon.src =`D:/My Projects/doc-org/src/icons/dir-icon.png`;
+	dirBlock.appendChild(dirIcon);
+	const dirContent = document.createElement('div');
+	dirContent.className = 'doc-org-button-content';
+	dirContent.textContent = contentName;
+	dirBlock.appendChild(dirContent);
+	dirButton.appendChild(dirBlock);
+	return dirButton;
 }
 
-//////////////////////////////////////////////////
-/////////////// Open Doc Directory ///////////////
-//////////////////////////////////////////////////
-function openFolder(dirName) {
+//Open Directory
+function opendir(dirName) {
 	openDocDir(dirName);
 	return;
 }
+
+// Remove Directory
+
+
+//////////////////////////////////////////////////
+/////////////// Directory Options ////////////////
+//////////////////////////////////////////////////
+
+// Add Document
+add_doc.addEventListener('click', async function () {
+	let messsage = await addDoc()
+});

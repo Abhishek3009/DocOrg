@@ -63,7 +63,7 @@ ipcMain.handle('openFile', (event, filePath) => {
 
 
 //////////////////////////////////////////////////
-///////////// Doc Directory Handlers /////////////
+/////////////// Directory Handlers ///////////////
 //////////////////////////////////////////////////
 
 ipcMain.handle('create-doc-dir', (event, dirName) => {
@@ -134,6 +134,27 @@ ipcMain.handle('open-doc-dir', (event, dirName) => {
     return "opened"
 })
 
+//////////////////////////////////////////////////
+/////////////// Directory Handlers ///////////////
+//////////////////////////////////////////////////
+
+ipcMain.handle('add-doc', (event) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const result = dialog.showOpenDialogSync(mainWindow, { filters: [{ name: 'All', extensions: ['*'] }] });
+        if (result && result.length > 0) {
+          resolve(result[0]);
+        } else {
+          resolve('canceled');
+        }
+      } catch (err) {
+        console.error(err);
+        dialog.showErrorBox('Error', 'An error occurred while opening the file.');
+        resolve('error');
+      }
+    });
+});
+
 /////////////////////////////////////////////////////////// Window Menu /////////////////////////////////////////////////////////////////////
 
 const DocOrgMenuOptions = [
@@ -154,7 +175,7 @@ const DocOrgMenuOptions = [
         }
       ]
     }
-  ]
+]
   
-  const DocOrgMenu = Menu.buildFromTemplate(DocOrgMenuOptions)
-  Menu.setApplicationMenu(DocOrgMenu)
+const DocOrgMenu = Menu.buildFromTemplate(DocOrgMenuOptions)
+Menu.setApplicationMenu(DocOrgMenu)

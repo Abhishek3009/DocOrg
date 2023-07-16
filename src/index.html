@@ -5,28 +5,29 @@
     <meta charset="UTF-8">
     <title>Electron App</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="foldersView.css">
-    <link rel="stylesheet" href="filesView.css">
+    <link rel="stylesheet" href="dirsView.css">
+    <link rel="stylesheet" href="docsView.css">
 
 </head>
 <body>      
 
     <div id="manage-bar">
-        <button class="doc-org-button">Add File</button>
-        <input type="text" id="create-new-dir">
-        <button class="doc-org-button" id="create-new-dir-btn">
-            <span>
-                Create Document Section
-            </span>
-        </button>
+        <div id="doc-org-doc-opt">
+            <button class="doc-org-button" id="add-doc">Add doc</button>
+            <button class="doc-org-button" id="rem-doc">Del doc</button>
+        </div>
+        <div id="doc-org-dir-opt">
+            <input type="text" id="create-new-dir">
+            <button class="doc-org-button" id="create-new-dir-btn">Create Document Section</button>
+            <button class="doc-org-button">Remove Document Section</button>
+        </div>
     </div>
     <div id="container">
-        <div id="foldersView"></div>
-        <div id="filesView"></div>
+        <div id="dirsView"></div>
+        <div id="docsView"></div>
     </div>      
 
     <script src="renderer.js"></script>
-    <script src="newButton.js"></script>
 
 </body>
 </html>

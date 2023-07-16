@@ -16,14 +16,19 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	openFile: (filePath) => {
     	ipcRenderer.invoke('openFile', filePath);
 	},
+
+	writeFile: (text) => {
+    	ipcRenderer.invoke('write-file', text);
+	},
 	
+///////////////////////////////////////////////////////////
 	createDocDir: async(docDirName) => {
     	let response = await ipcRenderer.invoke('create-doc-dir', docDirName);
 		console.log(response)
 		return response;
 	},
 
-	loadDocDir: async () => {
+	loadDocDir: async() => {
 		let response = await ipcRenderer.invoke('load-doc-dir');
 		console.log(response)
 		return response;
@@ -35,12 +40,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
 		return response;
 	},
 
-	readFile: () => {
-    	ipcRenderer.invoke('read-file');
-	},
-
-	writeFile: (text) => {
-    	ipcRenderer.invoke('write-file', text);
+	addDoc: async() => {
+    	let response = await ipcRenderer.invoke('add-doc');
+		console.log(response)
+		return response;
 	}
 
 });
