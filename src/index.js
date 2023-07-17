@@ -123,7 +123,7 @@ ipcMain.handle('open-doc-dir', (event, dirName) => {
             console.error(err);
             dialog.showErrorBox('Error', 'Failed to read file.');
             } else {
-            dialog.showMessageBox(mainWindow, { type: 'info', message: data });
+            // dialog.showMessageBox(mainWindow, { type: 'info', message: data });
             }
         });
     }
@@ -132,6 +132,19 @@ ipcMain.handle('open-doc-dir', (event, dirName) => {
         dialog.showErrorBox('Error', 'An error occurred while opening the file.');
     }
     return "opened"
+})
+
+ipcMain.handle('rem-doc-dir', (event, dirName) => {
+    const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+    fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error(err);
+          dialog.showErrorBox('Unable To Remove', 'Error while removing the directory.');
+          return 1;
+        }
+        console.log('deleted');
+      });
+    return 0;
 })
 
 //////////////////////////////////////////////////

@@ -40,6 +40,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
 		return response;
 	},
 
+	remDocDir: async(docDirName) => {
+    	let response = await ipcRenderer.invoke('rem-doc-dir', docDirName);
+		console.log(response)
+		return response;
+	},
+
 	addDoc: async() => {
     	let response = await ipcRenderer.invoke('add-doc');
 		console.log(response)

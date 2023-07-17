@@ -1,6 +1,6 @@
 // Access the Electron API via the exposed object
 const { sendOpendir, receivedirContents, openFile, 
-		createDocDir, loadDocDir, openDocDir,
+		createDocDir, loadDocDir, openDocDir, remDocDir,
 		addDoc										} = window.electronAPI;
 
 //////////////////////////////////////////////////
@@ -8,12 +8,14 @@ const { sendOpendir, receivedirContents, openFile,
 //////////////////////////////////////////////////
 
 const body = document.body
-const dirs_view = document.getElementById('dirsView')
+const dirs_view = document.getElementById('dirsView');
 
-const create_new_dir = document.getElementById('create-new-dir')
-const create_new_dir_btn = document.getElementById('create-new-dir-btn')
-const add_doc = document.getElementById('add-doc')
+const new_dir_name = document.getElementById('new-dir-name');
+const new_dir_btn = document.getElementById('new-dir');
+const rem_dir_btn = document.getElementById('rem-dir');
+const add_doc = document.getElementById('add-doc');
 
+var active_dir = '';
 
 // receivedirContents((contents) => {
 //   const filesView = document.getElementById('filesView');
@@ -59,7 +61,6 @@ const add_doc = document.getElementById('add-doc')
 function removeExtension(filename) {
 	return filename.substring(0, filename.lastIndexOf('.')) || filename;
 }
-
 async function loadSideBar() {
 	const contents = await loadDocDir()
 	console.log(contents)
@@ -71,17 +72,15 @@ async function loadSideBar() {
 		contentId++;
 	}
 };
-
 body.onload = loadSideBar();
-
 
 //////////////////////////////////////////////////
 /////////////// Directory Options ////////////////
 //////////////////////////////////////////////////
 
 // Create Directory
-create_new_dir_btn.addEventListener('click', async function () {
-  let newDirName = document.getElementById('create-new-dir').value
+new_dir_btn.addEventListener('click', async function () {
+  let newDirName = document.getElementById('new-dir-name').value
   let messsage = await createDocDir(newDirName)
   if (messsage === 0) {
     let newDirBlock = createDirBtn(newDirName)
@@ -89,34 +88,52 @@ create_new_dir_btn.addEventListener('click', async function () {
   } else {
     console.log(messsage)
   }
+  document.getElementById('new-dir-name').value = '';
 });
 function createDirBtn(contentName) {
 	const dirButton = document.createElement('button');
-	dirButton.className = 'doc-org-button';	
-	dirButton.setAttribute('onclick', "opendir('"+contentName+"')");
+	dirButton.className = 'doc-org-dir';
+	dirButton.id = contentName;
+	dirButton.setAttribute('onclick', "activeDir('"+contentName+"')");
 
 	const dirBlock = document.createElement('div');
 
 	const dirIcon = document.createElement('img');
-	dirIcon.className = 'doc-org-button-icon'
+	dirIcon.className = 'doc-org-dir-icon'
 	dirIcon.src =`D:/My Projects/doc-org/src/icons/dir-icon.png`;
 	dirBlock.appendChild(dirIcon);
 	const dirContent = document.createElement('div');
-	dirContent.className = 'doc-org-button-content';
+	dirContent.className = 'doc-org-dir-content';
 	dirContent.textContent = contentName;
 	dirBlock.appendChild(dirContent);
 	dirButton.appendChild(dirBlock);
 	return dirButton;
 }
 
-//Open Directory
-function opendir(dirName) {
+// Remove Directory
+rem_dir_btn.addEventListener('click', async function () {
+	let messsage = await remDocDir(active_dir);
+	if (messsage === 0) {
+		const temp_dirs = dirs_view.querySelectorAll('button');
+		temp_dirs.forEach((temp_dir) => {
+			dirs_view.removeChild(temp_dir);
+		});
+		loadSideBar();
+	}
+	console.log(messsage);
+	active_dir = '';
+});
+
+//Active Directory
+function activeDir(dirName) {
 	openDocDir(dirName);
+	if (active_dir !== '') {
+		document.getElementById(active_dir).classList.toggle('active');
+	}
+	document.getElementById(dirName).classList.toggle('active');
+	active_dir = dirName;
 	return;
 }
-
-// Remove Directory
-
 
 //////////////////////////////////////////////////
 /////////////// Directory Options ////////////////
