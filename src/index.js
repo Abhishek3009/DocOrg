@@ -168,6 +168,19 @@ ipcMain.handle('add-doc', (event) => {
     });
 });
 
+ipcMain.handle('append-doc', (event, pathData, dirName) => {
+    var stat = 0;
+    const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
+    fs.appendFile(filePath, pathData + '\n', (err) => {
+      if (err) {
+        console.error(err);
+        dialog.showErrorBox('Error', 'An error occurred while adding the file.');
+        stat = 1;
+      }
+    });
+    return stat;
+});
+
 /////////////////////////////////////////////////////////// Window Menu /////////////////////////////////////////////////////////////////////
 
 const DocOrgMenuOptions = [

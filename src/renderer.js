@@ -141,5 +141,6 @@ function activeDir(dirName) {
 
 // Add Document
 add_doc.addEventListener('click', async function () {
-	let messsage = await addDoc()
+	let messsage = await addDoc(active_dir);
+	console.log(messsage);
 });

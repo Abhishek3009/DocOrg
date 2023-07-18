@@ -72,8 +72,13 @@
   touch-action: manipulation;
 }
 
-.doc-org-dir.active, .doc-org-dir:hover {
+.doc-org-dir.active {
   background-color: #1e293b;
+  color: #fff;
+}
+
+.doc-org-dir:hover {
+  background-color: #344d74;
   color: #fff;
 }
 
