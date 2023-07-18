@@ -151,21 +151,26 @@ ipcMain.handle('rem-doc-dir', (event, dirName) => {
 /////////////// Directory Handlers ///////////////
 //////////////////////////////////////////////////
 
-ipcMain.handle('add-doc', (event) => {
-    return new Promise((resolve, reject) => {
-      try {
-        const result = dialog.showOpenDialogSync(mainWindow, { filters: [{ name: 'All', extensions: ['*'] }] });
-        if (result && result.length > 0) {
-          resolve(result[0]);
-        } else {
-          resolve('canceled');
-        }
-      } catch (err) {
-        console.error(err);
-        dialog.showErrorBox('Error', 'An error occurred while opening the file.');
-        resolve('error');
-      }
-    });
+ipcMain.handle('add-doc', (event, dirName) => {
+	if (dirName === '') {
+		dialog.showErrorBox('Alert', 'Select a Directory');
+		return '';
+	} else {
+		return new Promise((resolve, reject) => {
+			try {
+				const result = dialog.showOpenDialogSync(mainWindow, { filters: [{ name: 'All', extensions: ['*'] }] });
+				if (result && result.length > 0) {
+					resolve(result[0]);
+				} else {
+					resolve('canceled');
+				}
+			} catch (err) {
+				console.error(err);
+				dialog.showErrorBox('Error', 'An error occurred while opening the file.');
+				resolve('error');
+			}
+		  });	
+	}
 });
 
 ipcMain.handle('append-doc', (event, pathData, dirName) => {

@@ -47,11 +47,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	},
 
 	addDoc: async(dirName) => {
-    	let pathData = await ipcRenderer.invoke('add-doc');
+    	let pathData = await ipcRenderer.invoke('add-doc', dirName);
+		if (pathData === '') {
+			return;
+		}
 		let response = await ipcRenderer.invoke('append-doc', pathData, dirName);
 		console.log(response);
 		let parts = pathData.split('/');
-		return parts[parts.length - 1];		
+		return parts[parts.length - 1];
 	}
 
 });
