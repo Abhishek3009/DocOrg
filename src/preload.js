@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
 	openDocDir: async(docDirName) => {
     	let response = await ipcRenderer.invoke('open-doc-dir', docDirName);
+		response.pop();
 		console.log(response)
 		return response;
 	},
