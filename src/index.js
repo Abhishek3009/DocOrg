@@ -61,6 +61,15 @@ ipcMain.handle('openFile', (event, filePath) => {
   });
 });
 
+function showAlertBox(message) {
+    const options = {
+        type: 'info',
+        title: 'Alert',
+        message: message,
+        buttons: ['OK']
+    }; 
+    dialog.showMessageBox(mainWindow, options);
+}
 
 //////////////////////////////////////////////////
 /////////////// Directory Handlers ///////////////
@@ -118,20 +127,14 @@ ipcMain.handle('load-doc-dir', (event) => {
 ipcMain.handle('open-doc-dir', (event, dirName) => {
     const filePath = path.join(__dirname, "../doc-dirs", dirName + '.txt');
     try {
-        fs.readFile(filePath, 'utf-8', (err, data) => {
-            if (err) {
-            console.error(err);
-            dialog.showErrorBox('Error', 'Failed to read file.');
-            } else {
-            // dialog.showMessageBox(mainWindow, { type: 'info', message: data });
-            }
-        });
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        const lines = fileContent.split('\n');
+        return lines;
+    } catch (err) {
+        console.error('Error:', err);
+        dialog.showErrorBox('Error','There was some error while opening. Retry!')
+        return [];
     }
-    catch (err) {
-        console.error(err);
-        dialog.showErrorBox('Error', 'An error occurred while opening the file.');
-    }
-    return "opened"
 })
 
 ipcMain.handle('rem-doc-dir', (event, dirName) => {

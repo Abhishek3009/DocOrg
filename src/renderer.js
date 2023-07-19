@@ -9,6 +9,7 @@ const { sendOpendir, receivedirContents, openFile,
 
 const body = document.body
 const dirs_view = document.getElementById('dirsView');
+const docs_view = document.getElementById('docsView');
 
 const new_dir_name = document.getElementById('new-dir-name');
 const new_dir_btn = document.getElementById('new-dir');
@@ -74,6 +75,31 @@ async function loadSideBar() {
 };
 body.onload = loadSideBar();
 
+function createDocBtn(contentName) {
+	const docButton = document.createElement('button');
+	docButton.className = 'doc-org-dir';
+	docButton.id = contentName;
+	docButton.setAttribute('onclick', "activeDir('"+contentName+"')");
+	const dirContent = document.createElement('div');
+	dirContent.className = 'doc-org-dir-content';
+	dirContent.textContent = contentName;
+	docButton.appendChild(dirContent);
+	return docButton;
+}
+async function loadDocsView(doclist) {
+	const temp_docs = docs_view.querySelectorAll('button');
+	temp_docs.forEach((temp_docs) => {
+		docs_view.removeChild(temp_docs);
+	});
+	let contentId = 0;
+	while (contentId < doclist.length) {
+		let docName = doclist[contentId].replace(/^.*[\\\/]/, '').replace(/\.[^/.]+$/, '');
+		let currContentBlock = createDocBtn(docName);
+		docs_view.appendChild(currContentBlock)
+		contentId++;
+	}
+};
+
 //////////////////////////////////////////////////
 /////////////// Directory Options ////////////////
 //////////////////////////////////////////////////
@@ -125,8 +151,9 @@ rem_dir_btn.addEventListener('click', async function () {
 });
 
 //Active Directory
-function activeDir(dirName) {
-	openDocDir(dirName);
+async function activeDir(dirName) {
+	let doclist = await openDocDir(dirName);
+	await loadDocsView(doclist);
 	if (active_dir !== '') {
 		document.getElementById(active_dir).classList.toggle('active');
 	}
